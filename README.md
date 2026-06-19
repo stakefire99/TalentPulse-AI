@@ -52,6 +52,9 @@ python models/train_models.py
 streamlit run app.py
 ```
 
+### Live Demo
+
+Click here:- [https://talentpulse-ai-nur9vuy5jesmnrerwdzfyo.streamlit.app/](url)
 ---
 
 ## 📂 File Structure
