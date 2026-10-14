@@ -688,9 +688,7 @@ elif page == "predictor":
             pskill = primary if primary in le["le_skill"].classes_ else le["le_skill"].classes_[0]
             skill_enc = le["le_skill"].transform([pskill])[0]
 
-            # find role demand score
-            demand_avg = df["demand_score"].mean()
-            X = np.array([[city_enc, exp_enc, edu_enc, skill_enc, demand_avg]])
+            X = np.array([[city_enc, exp_enc, edu_enc, skill_enc]])
 
             pred_role_enc = le["role_model"].predict(X)[0]
             pred_role = le["le_role"].inverse_transform([pred_role_enc])[0]
@@ -700,7 +698,7 @@ elif page == "predictor":
             required = set(ROLE_SKILLS_MAP.get(pred_role, []))
             user_set = set(user_skills)
             match = len(required & user_set) / max(len(required), 1) * 100
-            match = min(95, max(55, match + np.random.uniform(20, 30)))
+            match = round(match)
             missing = required - user_set
 
             st.markdown(f"""
