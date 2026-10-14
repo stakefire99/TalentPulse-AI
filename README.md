@@ -54,7 +54,8 @@ streamlit run app.py
 
 ### Live Demo
 
-Click here:- [https://talentpulse-ai-nur9vuy5jesmnrerwdzfyo.streamlit.app/](url)
+**[Open the live app](https://talentpulse-ai-nur9vuy5jesmnrerwdzfyo.streamlit.app/)**
+
 ---
 
 ## 📂 File Structure
@@ -91,13 +92,19 @@ talentpulse/
 
 ## 🤖 ML Models
 
-**Salary Predictor** — `RandomForestRegressor`
-- Features: city, experience, education, primary skill, demand score
-- Target: salary in LPA
+Both models are Random Forests trained on the synthetic dataset using **city, experience level, education and primary skill**, and evaluated on a **20% held-out test set**.
 
-**Role Classifier** — `RandomForestClassifier`
-- Same features → predicts best-fit role
-- Rule-based skill gap analysis overlaid on top
+| Model | Task | Test result |
+|---|---|---|
+| Salary Predictor (`RandomForestRegressor`) | Predict salary in LPA | **R² 0.75, MAE ≈ 1.4 LPA** |
+| Role Classifier (`RandomForestClassifier`) | Predict best-fit role (10 classes) | **45% accuracy** (random guessing = 10%) |
+
+**Notes on the models**
+- `demand_score` is intentionally *not* used as a feature. In this dataset it is a fixed value per role, so including it leaks the answer: the role classifier scored 100% with it, which is meaningless.
+- The data is **synthetic** (generated from hand-set base salaries, city and experience multipliers), so these scores show the app's pipeline works, not real-world hiring accuracy.
+- A rule-based skill-gap analysis is applied on top of the predicted role.
+
+Reproduce: `python data/generate_data.py` then `python models/train_models.py` (prints the metrics above).
 
 ---
 
